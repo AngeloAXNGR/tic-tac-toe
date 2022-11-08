@@ -24,10 +24,11 @@ section{
   flex-direction:column;
   align-items:center;
   padding: 40px 0;
+  gap:40px;
+  justify-content: center;
 }
 
 .turn-text{
-  margin-bottom: 40px;
   font-size: 2.5em;
   color:rgb(104, 89, 89);
 }
@@ -35,7 +36,7 @@ section{
 .gameboard{
   border: 2px solid black;
   display:grid;
-  grid-template-columns: repeat(3, 150px);
+  grid-template-columns: repeat(3, 125px);
 }
 
 .tile{
@@ -43,6 +44,17 @@ section{
   align-items: center;
   justify-content: center;
   border: 2px solid black;
-  height: 150px;
+  height: 125px;
   font-size: 10rem;
+}
+
+.restart-button{
+  background-color: rgb(59, 59, 99);
+  border:none;
+  border-radius: 5px;
+  color:white;
+  font-weight:bold;
+  font-size: 2rem;
+  text-transform: capitalize;
+  padding: 20px;
 }

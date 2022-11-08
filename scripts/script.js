@@ -10,7 +10,8 @@ const Game = (() =>{
   const gameTile = document.querySelectorAll('.tile');
   const turnMessage = document.querySelector('.turn-text');
   const tileArray = Array.prototype.slice.call(gameTile);
-  const gameArray = ['','','','','','','','','']
+  const resetBtn = document.querySelector('.restart-button');
+  let gameArray = ['','','','','','','','','']
   let round = 1;
   let roundCount = round - 1;
 
@@ -28,6 +29,23 @@ const Game = (() =>{
       }
     }
   }
+
+  const reset = () =>{
+    gameTile.forEach(tile =>{
+      tile.innerHTML = "";
+    })
+    round = 1;
+    roundCount = round - 1;
+    gameArray = ['','','','','','','','','']
+    console.log('click');
+    renderBoard(gameArray);
+    setTurnMessage(player1.name);
+    tileArray.forEach(tile =>{
+      tile.addEventListener('click', placeMarker)
+    })
+  }
+
+  resetBtn.addEventListener('click', reset);
 
   const getPlayerMarker = () =>{
     if(round % 2 == 0){
@@ -80,11 +98,22 @@ const Game = (() =>{
   const checkWinner = (gameArray, marker) =>{
 
     if(checkRow(gameArray)){
-      console.log(`Winner ${marker}!`);
+      turnMessage.textContent = `Winner ${marker}!`;
+      tileArray.forEach(tile =>{
+        tile.removeEventListener('click', placeMarker)
+      })
     }else if(checkColumn(gameArray)){
-      console.log(`Winner ${marker}!`);
+      turnMessage.textContent = `Winner ${marker}!`;
+      tileArray.forEach(tile =>{
+        tile.removeEventListener('click', placeMarker)
+      })
     }else if(checkDiagonal(gameArray)){
-      console.log(`Winner ${marker}!`);
+      turnMessage.textContent = `Winner ${marker}!`;
+      tileArray.forEach(tile =>{
+        tile.removeEventListener('click', placeMarker)
+      })
+    }else if(roundCount == 9){
+      turnMessage.textContent = "Draw!";
     }
 
   }
@@ -109,15 +138,14 @@ const Game = (() =>{
 
   }
 
-  return{tileArray, placeMarker, setTurnMessage}
+  tileArray.forEach(tile =>{
+    tile.addEventListener('click', placeMarker)
+  })
+
+  return{ placeMarker, setTurnMessage, reset}
 })();
 
-
-// Interactable
-Game.tileArray.forEach(tile =>{
-  tile.addEventListener('click', Game.placeMarker)
-})
-
+// Game start
 const player1 = playerFactory('X', 'X');
 const player2 = playerFactory('O', 'O');
 Game.setTurnMessage(player1.name);
